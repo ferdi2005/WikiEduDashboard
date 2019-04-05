@@ -35,12 +35,14 @@ gem 'premailer-rails' # used for enabling CSS for mailer emails
 gem 'nokogiri' # expected by premailer-rails but not required
 gem 'mailgun-ruby' # email sending service
 
-### Survey features, implemented as a rails engine
-# If you want to be able to hack locally on rapidfire,
-# run `export RAPIDFIREHACKINGMODE=true` in your terminal.
-if ENV['RAPIDFIREHACKINGMODE'] == 'true'
+### Survey and Ticketing features, implemented as a rails engines
+# If you want to be able to hack locally on rapidfire or ticket_dispenser,
+# run `export ENGINEHACKINGMODE=true` in your terminal.
+if ENV['ENGINEHACKINGMODE'] == 'true'
   gem 'rapidfire', path: './vendor/rapidfire'
+  gem 'ticket_dispenser', path: '../TicketDispenser'
 else
+  gem 'ticket_dispenser', git: 'https://github.com/WikiEducationFoundation/TicketDispenser.git'
   gem 'rapidfire', git: 'https://github.com/WikiEducationFoundation/rapidfire', branch: 'master'
 end
 
@@ -82,6 +84,10 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw]
 # for those who don't have a native readline utility installed
 gem 'rb-readline', platforms: [:mingw, :mswin, :x64_mingw]
 
+### Incoming Mail
+gem 'griddler'
+gem 'griddler-mailgun'
+
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller', platforms: [:mri_21]
@@ -99,6 +105,7 @@ group :development do
   gem 'capistrano-sidekiq'
   gem 'rails-erd'
   gem 'annotate' # Generates automatic schema notations on model files
+  gem 'faker' # Useful for randommly generating data
 end
 
 group :development, :test do
